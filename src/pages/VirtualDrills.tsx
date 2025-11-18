@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -20,8 +21,13 @@ import {
   Zap,
   Eye
 } from "lucide-react";
+import VREarthquakeSimulation from "@/components/ar-vr/VREarthquakeSimulation";
+import AREarthquakeExperience from "@/components/ar-vr/AREarthquakeExperience";
 
 const VirtualDrills = () => {
+  const [showVR, setShowVR] = useState(false);
+  const [showAR, setShowAR] = useState(false);
+
   const drills = [
     {
       title: "Earthquake Response Drill",
@@ -180,6 +186,12 @@ const VirtualDrills = () => {
 
   return (
     <div className="space-y-8">
+      {/* VR Modal */}
+      {showVR && <VREarthquakeSimulation onClose={() => setShowVR(false)} />}
+      
+      {/* AR Modal */}
+      {showAR && <AREarthquakeExperience onClose={() => setShowAR(false)} />}
+
       {/* Header */}
       <div className="text-center space-y-4">
         <h1 className="text-3xl font-bold text-foreground">Virtual Drills</h1>
@@ -371,6 +383,88 @@ const VirtualDrills = () => {
             </Card>
           </div>
 
+          {/* AR and VR Experience Section */}
+          <Card className="bg-gradient-to-r from-primary/5 to-safety/5 border-primary/20">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Eye className="w-5 h-5 text-primary" />
+                Interactive AR & VR Experiences
+              </CardTitle>
+              <CardDescription>
+                Experience realistic earthquake scenarios through immersive VR and AR technologies
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* VR Experience Card */}
+                <Card className="disaster-card">
+                  <CardHeader>
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-12 h-12 bg-gradient-to-br from-primary to-safety rounded-lg flex items-center justify-center">
+                        <Glasses className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <CardTitle className="text-xl">VR Earthquake Simulation</CardTitle>
+                        <CardDescription>Immersive 3D classroom experience</CardDescription>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <h4 className="font-medium text-sm">Features:</h4>
+                      <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside ml-2">
+                        <li>Realistic 3D classroom environment</li>
+                        <li>Camera shake simulation</li>
+                        <li>Interactive safety instructions</li>
+                        <li>Practice Drop, Cover, Hold On</li>
+                      </ul>
+                    </div>
+                    <Button 
+                      className="w-full bg-gradient-to-r from-primary to-safety hover:opacity-90"
+                      onClick={() => setShowVR(true)}
+                    >
+                      <Glasses className="w-4 h-4 mr-2" />
+                      Start VR Drill
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* AR Experience Card */}
+                <Card className="disaster-card">
+                  <CardHeader>
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-12 h-12 bg-gradient-to-br from-warning to-emergency rounded-lg flex items-center justify-center">
+                        <Smartphone className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <CardTitle className="text-xl">AR Earthquake Experience</CardTitle>
+                        <CardDescription>Marker-based AR simulation</CardDescription>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <h4 className="font-medium text-sm">Features:</h4>
+                      <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside ml-2">
+                        <li>Real-world environment overlay</li>
+                        <li>3D building shake animation</li>
+                        <li>Safety instructions display</li>
+                        <li>Works on mobile browsers</li>
+                      </ul>
+                    </div>
+                    <Button 
+                      className="w-full bg-gradient-to-r from-warning to-emergency hover:opacity-90"
+                      onClick={() => setShowAR(true)}
+                    >
+                      <Smartphone className="w-4 h-4 mr-2" />
+                      Start AR Drill
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* AR/VR Drills Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {arVrDrills.map((drill, index) => (
@@ -480,10 +574,10 @@ const VirtualDrills = () => {
                     For VR Experiences
                   </h4>
                   <ul className="text-sm text-muted-foreground space-y-1">
-                    <li>• VR Headset (Oculus, HTC Vive, or compatible)</li>
-                    <li>• Minimum 6GB RAM</li>
-                    <li>• Graphics card: GTX 1060 or equivalent</li>
-                    <li>• Stable internet connection (25+ Mbps)</li>
+                    <li>• Modern web browser (Chrome, Firefox, Edge)</li>
+                    <li>• Mouse and keyboard for navigation</li>
+                    <li>• Optional: VR headset for immersive experience</li>
+                    <li>• Stable internet connection</li>
                   </ul>
                 </div>
                 <div className="space-y-3">
@@ -493,9 +587,9 @@ const VirtualDrills = () => {
                   </h4>
                   <ul className="text-sm text-muted-foreground space-y-1">
                     <li>• Smartphone with camera</li>
-                    <li>• ARCore (Android) or ARKit (iOS) support</li>
-                    <li>• Minimum 3GB RAM</li>
-                    <li>• Stable internet connection (10+ Mbps)</li>
+                    <li>• Modern mobile browser (Chrome, Safari)</li>
+                    <li>• Hiro marker (downloadable from the app)</li>
+                    <li>• Good lighting for marker detection</li>
                   </ul>
                 </div>
               </div>
